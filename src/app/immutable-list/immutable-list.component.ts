@@ -47,10 +47,10 @@ immutableList :NodeModel;
   }
   
   printList(){
-    console.log(this.cons(60));
-    console.log(this.drop(3));
+    // console.log(this.cons(60,this.immutableList));
+    // console.log(this.drop(3));
     console.log(this.immutableList);
-    console.log(this.reverse());
+    console.log(this.reverse(this.immutableList));
   }
   //current node
   //check null
@@ -75,9 +75,9 @@ immutableList :NodeModel;
    return this.isNullCheck(nodemodelinstance.next) ? nodemodelinstance.element : this.getTailLast(nodemodelinstance.next);
   }
   // cons
-  cons(value){
+  cons(value,toBePrependedList){
     let list = new NodeModel(value);
-    list.next =  _.cloneDeep(this.immutableList);
+    list.next =  _.cloneDeep(toBePrependedList);
     return list;
   }
  
@@ -95,22 +95,30 @@ immutableList :NodeModel;
     
   }
   
-  // reverse
-  reverse(modifiedList?){
+  // reverse in progress
+  reverse(list){
     let reverseList;
-    let clonedList =  _.cloneDeep(this.immutableList);
-    reverseList =  this.prepareReverseList(this.getHead(clonedList),clonedList);
-    console.log(reverseList);
+    let clonedList =  _.cloneDeep(list);
+    let reverseListHead = new NodeModel(this.getHead(clonedList));
+    reverseList =  this.prepareReverseList(reverseListHead,this.getTailList(clonedList));
+    console.log('reverseList',reverseList);
     return reverseList;
   }
-  prepareReverseList(nodeValue,list){
-    if(this.isNullCheck(list.next)){
-      list.element = nodeValue;
-    }else{
-      let nodemodelinstance = list;
-      this.prepareReverseList(nodeValue,nodemodelinstance.next);
+  prepareReverseList(listToBePrepended,list:NodeModel){
+    // store head in element
+    let reversedList,modifiedList;
+    let tail = this.getTailList(list);
+    // make null to next
+    // prepend the nest tail listdata
+    // console.log(this.cons(4,list));
+    
+    console.log(this.size++);
+    if(!this.isNullCheck(list.next)){
+      reversedList = this.cons(list.element,listToBePrepended);
+      setTimeout( this.prepareReverseList(modifiedList,tail), 0);
     }
-    return list;
+    return reversedList; 
+    
   }
   
 // filter
