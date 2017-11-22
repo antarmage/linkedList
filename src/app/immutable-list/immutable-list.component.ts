@@ -101,26 +101,21 @@ immutableList :NodeModel;
     let clonedList =  _.cloneDeep(list);
     let reverseListHead = new NodeModel(this.getHead(clonedList));
     reverseList =  this.prepareReverseList(reverseListHead,this.getTailList(clonedList));
-    console.log('reverseList',reverseList);
     return reverseList;
   }
   prepareReverseList(listToBePrepended,list:NodeModel){
     // store head in element
-    let reversedList,modifiedList;
-    let tail = this.getTailList(list);
     // make null to next
     // prepend the nest tail listdata
-    // console.log(this.cons(4,list));
-    
-    console.log(this.size++);
-    if(!this.isNullCheck(list.next)){
-      reversedList = this.cons(list.element,listToBePrepended);
-      setTimeout( this.prepareReverseList(modifiedList,tail), 0);
-    }
-    return reversedList; 
+    let reversedList;
+    reversedList = _.cloneDeep(this.cons(list.element,listToBePrepended));
+    return this.isNullCheck(list.next) ? reversedList : this.prepareReverseList(this.cons(list.element,listToBePrepended),this.getTailList(list));
+  }
+  
+  // filter
+  filterMethod(){
     
   }
   
-// filter
 // map
 }
