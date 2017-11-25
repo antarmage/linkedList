@@ -46,12 +46,7 @@ immutableList :NodeModel;
     return list;
   }
   
-  printList(){
-    // console.log(this.cons(60,this.immutableList));
-    // console.log(this.drop(3));
-    console.log(this.immutableList);
-    console.log(this.reverse(this.immutableList));
-  }
+  
   //current node
   //check null
   isNullCheck(value){
@@ -65,10 +60,7 @@ immutableList :NodeModel;
   getTailList(list:NodeModel){
     return list.next;
   }
-  traverseListOnce(list:NodeModel){
-    let nodemodelinstance = list;
-    return nodemodelinstance.next;
-  }
+  
   // get tail last
   getTailLast(list:NodeModel){
     let nodemodelinstance = list;
@@ -87,8 +79,8 @@ immutableList :NodeModel;
     let clonedList =  _.cloneDeep(this.immutableList);
     let counter = numberOfELementsToBeDeleted;
     if(numberOfELementsToBeDeleted > 0){
-      deletedList = new NodeModel(this.traverseListOnce(clonedList.next).element);
-      deletedList.next = this.traverseListOnce(clonedList.next);
+      deletedList = new NodeModel(this.getTailList(clonedList.next).element);
+      deletedList.next = this.getTailList(clonedList.next);
       this.drop(counter - 1)
     }
       return deletedList;
@@ -113,7 +105,11 @@ immutableList :NodeModel;
   }
   
   // filter
-  filterMethod(){
+  printList(){
+     console.log(this.cons(60,this.immutableList));
+     console.log(this.immutableList);
+     console.log(this.drop(3));
+     console.log(this.reverse(this.immutableList));
     
   }
   
