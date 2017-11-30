@@ -18,7 +18,7 @@ immutableList :NodeModel;
 
   ngOnInit() {
     for(var i=1;i<=10;i++){ 
-      this.add(i);
+      this.immutableList = this.add(i);
      };
     this.printList();
   }
@@ -26,10 +26,10 @@ immutableList :NodeModel;
   add(element){
     let node = new NodeModel(element);
     if(this.isNullCheck(this.head)){
-      this.immutableList =  this.setHeadValue(node)
+       return this.setHeadValue(node)
     }else{
       let clonedList = _.cloneDeep(this.immutableList);
-      this.immutableList = this.prepareList(node,clonedList);
+      return this.prepareList(node,clonedList);
     }
   }
   setHeadValue(nodeValue){
@@ -45,7 +45,7 @@ immutableList :NodeModel;
     }
     return list;
   }
-  
+   
   
   //current node
   //check null
@@ -105,12 +105,33 @@ immutableList :NodeModel;
   }
   
   // filter
+  filterMethod(list,predicate,result?){
+    // check the value is present in the list
+    // traverse the complete list
+  if (predicate(list.element)) {
+    result = new NodeModel(list.element);
+  }
+   return this.isNullCheck(list.next) ? result : this.filterMethod(list.next,predicate,result);
+  }
+  mapMethod(list,predicate,result?){
+    let initialResult;
+    initialResult = this.add(predicate(list.element));
+    console.log(this.add(predicate(list.element)));
+    return this.isNullCheck(list.next) ? initialResult : this.mapMethod(list.next,predicate,initialResult);
+  }
   printList(){
      console.log(this.cons(60,this.immutableList));
      console.log(this.immutableList);
      console.log(this.drop(3));
      console.log(this.reverse(this.immutableList));
-    
+     let filterResult = this.filterMethod(this.immutableList,function(item){
+       return item === 2;
+     });
+     console.log(filterResult);
+     let mapResult = this.mapMethod(this.immutableList,function(item){
+      return item * 2;
+    });
+    console.log(mapResult);
   }
   
 // map
