@@ -18,7 +18,7 @@ immutableList :NodeModel;
 
   ngOnInit() {
     for(var i=1;i<=10;i++){ 
-      this.immutableList = this.add(i);
+      this.add(i);
      };
     this.printList();
   }
@@ -26,10 +26,10 @@ immutableList :NodeModel;
   add(element){
     let node = new NodeModel(element);
     if(this.isNullCheck(this.head)){
-       return this.setHeadValue(node)
+      this.immutableList =  this.setHeadValue(node);
     }else{
       let clonedList = _.cloneDeep(this.immutableList);
-      return this.prepareList(node,clonedList);
+      this.immutableList = this.prepareList(node,clonedList);
     }
   }
   setHeadValue(nodeValue){
@@ -116,7 +116,7 @@ immutableList :NodeModel;
   mapMethod(list,predicate,result?){
     let initialResult;
     initialResult = this.add(predicate(list.element));
-    console.log(this.add(predicate(list.element)));
+    console.log(initialResult);
     return this.isNullCheck(list.next) ? initialResult : this.mapMethod(list.next,predicate,initialResult);
   }
   printList(){
